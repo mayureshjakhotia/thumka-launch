@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Thumka turns dance videos you already have into private, guided practice." />
+    <title>Thumka — Master Any Dance, Step by Step</title>
+    <style>
+      :root {
+        --ink: #f8f7ff;
+        --muted: #bab6ce;
+        --violet: #9d7cff;
+        --violet-deep: #4c2f95;
+        --orange: #ff885d;
+        --night: #100d1e;
+        --panel: rgba(255, 255, 255, .075);
+        --line: rgba(255, 255, 255, .13);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--night);
+        font-family: ui-rounded, "SF Pro Rounded", "Avenir Next", system-ui, sans-serif;
+      }
+      a { color: inherit; text-decoration: none; }
+      .page { overflow: hidden; }
+      .hero {
+        min-height: 720px;
+        padding: 24px clamp(24px, 6vw, 96px) 80px;
+        background:
+          radial-gradient(circle at 80% 22%, rgba(255, 136, 93, .48), transparent 29rem),
+          radial-gradient(circle at 14% 75%, rgba(126, 82, 255, .48), transparent 31rem),
+          linear-gradient(135deg, #17102a 0%, #21103f 48%, #171128 100%);
+      }
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1150px;
+        margin: auto;
+      }
+      .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: -.04em; font-size: 24px; }
+      .brand img { width: 38px; height: 38px; border-radius: 11px; }
+      .pill, .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        font-weight: 750;
+      }
+      .pill { padding: 10px 15px; font-size: 13px; border: 1px solid var(--line); color: var(--muted); }
+      .hero-grid {
+        max-width: 1150px;
+        margin: 88px auto 0;
+        display: grid;
+        grid-template-columns: 1.08fr .92fr;
+        align-items: center;
+        gap: clamp(38px, 7vw, 110px);
+      }
+      .eyebrow { color: #ffb396; text-transform: uppercase; font-size: 12px; letter-spacing: .16em; font-weight: 800; }
+      h1 { margin: 14px 0 20px; font-size: clamp(48px, 6vw, 78px); line-height: .98; letter-spacing: -.07em; max-width: 690px; }
+      .lead { margin: 0; color: #ded9ed; font-size: clamp(18px, 2vw, 22px); line-height: 1.45; max-width: 560px; }
+      .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 31px; }
+      .button { min-height: 52px; padding: 0 22px; background: var(--ink); color: #171128; box-shadow: 0 12px 28px rgba(0,0,0,.18); }
+      .button.secondary { color: var(--ink); background: rgba(255,255,255,.1); border: 1px solid var(--line); box-shadow: none; }
+      .privacy { margin-top: 20px; color: var(--muted); font-size: 14px; }
+      .device-wrap { position: relative; display: grid; place-items: center; min-height: 480px; }
+      .orb { position: absolute; width: 370px; height: 370px; border-radius: 50%; filter: blur(1px); background: linear-gradient(145deg, rgba(255,157,115,.6), rgba(103,67,240,.4)); }
+      .phone {
+        position: relative;
+        width: min(310px, 75vw);
+        aspect-ratio: 9 / 17.4;
+        padding: 9px;
+        border: 4px solid #07050d;
+        border-radius: 43px;
+        background: #050409;
+        box-shadow: 0 32px 64px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.15);
+        transform: rotate(5deg);
+      }
+      .screen { height: 100%; overflow: hidden; border-radius: 31px; background: #261545; position: relative; }
+      .screen img { width: 100%; height: 100%; object-fit: cover; opacity: .94; }
+      .screen::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 55%, rgba(11,6,24,.82)); }
+      .screen-copy { position: absolute; z-index: 2; bottom: 26px; left: 21px; right: 18px; }
+      .screen-copy small { color: #d8ccff; font-weight: 750; }
+      .screen-copy strong { display: block; margin-top: 4px; font-size: 22px; letter-spacing: -.05em; }
+      .screen-copy span { display: inline-block; margin-top: 13px; padding: 7px 10px; border-radius: 20px; background: rgba(255,255,255,.16); font-size: 11px; font-weight: 800; }
+      main { max-width: 1150px; margin: auto; padding: 96px clamp(24px, 6vw, 96px); }
+      .section-label { color: var(--violet); font-size: 13px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+      h2 { max-width: 690px; margin: 13px 0 42px; font-size: clamp(32px, 4.5vw, 54px); line-height: 1.04; letter-spacing: -.06em; }
+      .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .feature { min-height: 228px; padding: 26px; border: 1px solid var(--line); border-radius: 24px; background: linear-gradient(145deg, rgba(255,255,255,.09), rgba(255,255,255,.035)); }
+      .number { color: var(--orange); font-size: 13px; font-weight: 800; }
+      .feature h3 { font-size: 23px; letter-spacing: -.04em; margin: 46px 0 10px; }
+      .feature p { margin: 0; color: var(--muted); line-height: 1.5; }
+      .steps { margin-top: 108px; display: grid; grid-template-columns: .78fr 1.22fr; gap: 64px; align-items: center; }
+      .steps p { color: var(--muted); font-size: 18px; line-height: 1.55; }
+      .step-list { display: grid; gap: 11px; }
+      .step { display: grid; grid-template-columns: 40px 1fr; gap: 15px; align-items: center; padding: 18px 20px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line); }
+      .step b { color: #151026; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #d9ccff; font-size: 13px; }
+      .step span { color: #e6e2f1; font-weight: 700; }
+      .quote { margin: 112px 0 0; padding: clamp(34px, 6vw, 70px); border-radius: 30px; background: linear-gradient(115deg, #6b49cf, #e8785d); text-align: center; }
+      .quote p { max-width: 760px; margin: 0 auto; font-size: clamp(28px, 4.4vw, 50px); line-height: 1.08; letter-spacing: -.06em; font-weight: 800; }
+      .quote span { display: block; margin-top: 20px; font-size: 15px; font-weight: 700; opacity: .82; }
+      footer { padding: 0 clamp(24px, 6vw, 96px) 52px; text-align: center; color: var(--muted); font-size: 14px; }
+      footer a { text-decoration: underline; text-underline-offset: 3px; }
+      @media (max-width: 760px) {
+        .hero { min-height: auto; padding-bottom: 58px; }
+        .hero-grid, .steps { grid-template-columns: 1fr; }
+        .hero-grid { margin-top: 65px; }
+        .device-wrap { min-height: 410px; order: -1; }
+        .phone { transform: rotate(3deg); }
+        .feature-grid { grid-template-columns: 1fr; }
+        .steps { gap: 30px; margin-top: 76px; }
+        main { padding-top: 72px; padding-bottom: 72px; }
+        .quote { margin-top: 76px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <nav>
+          <a class="brand" href="#top"><img src="assets/thumka-icon.png" alt="Thumka icon" />Thumka</a>
+          <span class="pill">Private practice, on your device</span>
+        </nav>
+        <div class="hero-grid" id="top">
+          <div>
+            <div class="eyebrow">Dance practice, made deliberate</div>
+            <h1>Master any dance, step by step.</h1>
+            <p class="lead">Thumka turns dance videos you already have into guided practice: slow them down, mirror the move, loop the hard part, and learn with on-device AI Steps.</p>
+            <div class="actions">
+              <a class="button" href="https://apps.apple.com/us/app/thumka/id6792849645">Download on the App Store</a>
+              <a class="button secondary" href="#how-it-works">See how it works</a>
+            </div>
+            <p class="privacy">No account required. Your videos stay on your device.</p>
+          </div>
+          <div class="device-wrap" aria-label="Thumka practice player preview">
+            <div class="orb"></div>
+            <div class="phone">
+              <div class="screen">
+                <img src="assets/ai-steps.png" alt="Thumka AI Steps screen" />
+                <div class="screen-copy"><small>AI STEPS</small><strong>One count at a time.</strong><span>Repeat the move</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main>
+        <div class="section-label">A better way to learn from video</div>
+        <h2>Keep the choreography. Lose the rewinding, guessing, and getting lost.</h2>
+        <section class="feature-grid">
+          <article class="feature"><div class="number">01</div><h3>See every move</h3><p>Slow a clip to quarter speed, step frame by frame, and mirror it so the movement makes sense in your body.</p></article>
+          <article class="feature"><div class="number">02</div><h3>Repeat with purpose</h3><p>Set an exact loop around the eight-count that keeps catching you, then keep practicing without touching the timeline.</p></article>
+          <article class="feature"><div class="number">03</div><h3>Make progress visible</h3><p>Use AI Steps to organize compatible videos into practical sections, then record, review, and keep building your practice habit.</p></article>
+        </section>
+        <section class="steps" id="how-it-works">
+          <div>
+            <div class="section-label">How it works</div>
+            <h2>From “I love this routine” to “I can do it.”</h2>
+            <p>Bring a video from your library, Files, or a direct video link. Thumka gives you the controls a dance tutorial should have had from the start.</p>
+          </div>
+          <div class="step-list">
+            <div class="step"><b>1</b><span>Import a dance clip you have permission to use.</span></div>
+            <div class="step"><b>2</b><span>Mirror, slow down, and loop the difficult section.</span></div>
+            <div class="step"><b>3</b><span>Use AI Steps or record yourself to practice with intent.</span></div>
+          </div>
+        </section>
+        <section class="quote"><p>Dance tutorials move fast. Your learning does not have to.</p><span>Thumka is free to start, with Thumka Pro for unlimited imports.</span></section>
+      </main>
+      <footer>Made for dancers who want to practice, not just watch. · <a href="https://apps.apple.com/us/app/thumka/id6792849645">Get Thumka</a></footer>
+    </div>
+  </body>
+</html>
